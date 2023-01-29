@@ -34,4 +34,22 @@ describe("Token contract", () => {
         jonathanmvToken.connect(accountTwo);
         expect(await jonathanmvToken.transfer(owner.address, 5)).to.changeTokenBalances(jonathanmvToken, [accountTwo, owner], [-5, 5]);
     });
+
+    it("Should emit Transfer events", async () => {
+        const { jonathanmvToken, owner, accountOne } = await loadFixture(deployTokenFixture);
+
+        expect(await jonathanmvToken.transfer(accountOne.address, 50))
+            .to.emit(jonathanmvToken, "Transfer")
+            .withArgs(owner.address, accountOne.address, 50);
+    });
+
+    it("Should fail if sender doesn't have enough tokens", async () => {
+        const { jonathanmvToken, owner, accountOne } = await loadFixture(deployTokenFixture);
+
+        const ownerFunds = await jonathanmvToken.balanceOf(owner.address);
+        await expect(jonathanmvToken.transfer(accountOne.address, ownerFunds.toNumber() + 1))
+            .to.be.revertedWith("Not enough tokens");
+
+        expect(await jonathanmvToken.balanceOf(owner.address)).to.equal(ownerFunds);
+    });
 });
