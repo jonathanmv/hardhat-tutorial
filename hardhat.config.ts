@@ -15,7 +15,7 @@ const config: HardhatUserConfig = {
   networks: {
     local: {
       url: "http://127.0.0.1:8545",
-      accounts: ["0xccaff8e69792600ce341e55540935ed7bf55281258f22325788743caf376db16"]
+      accounts: ["0x45c5860fb91347928110824c1107e1a7e7b83f9c4fb5835ba34abfa4abc1db3a"]
     },
     goerli: {
       url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_KEY}`,
