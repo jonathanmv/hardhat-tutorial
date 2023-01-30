@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.8;
+import "hardhat/console.sol";
 
 contract Token {
     string public name = "jonathanmv Token";
@@ -25,6 +26,13 @@ contract Token {
      */
     function transfer(address to, uint256 amount) external {
         require(balances[msg.sender] >= amount, "Not enough tokens");
+
+        console.log(
+            "Transferring %s tokens from %s to %s",
+            amount,
+            msg.sender,
+            to
+        );
 
         balances[msg.sender] -= amount;
         balances[to] += amount;
